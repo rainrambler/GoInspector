@@ -1,0 +1,20 @@
+// Demo
+package main
+
+import (
+	"fmt"
+)
+
+func exdemo(a, b int) (int, int) {
+	c := a
+	a = b
+	b = c
+	return a, b
+}
+
+func main() {
+	a := 1
+	b := 2
+	x, y := exdemo(a, b)
+	fmt.Printf("%d, %d\n", x, y)
+}
