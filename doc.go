@@ -10,8 +10,11 @@ import (
 )
 
 var curfset *token.FileSet
+var totalFiles int
 
 func scanSrcDir(dirname string) {
+	totalFiles = 0
+
 	err := filepath.Walk(dirname, func(fpath string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
@@ -33,7 +36,9 @@ func scanSrcDir(dirname string) {
 }
 
 func ParseGoSrc(fname string) {
-	fmt.Printf("INFO: Parsing %s...\n", fname)
+	//fmt.Printf("INFO: Parsing %s...\n", fname)
+	totalFiles++
+
 	bs, err := ReadBinFile(fname)
 	if err != nil {
 		fmt.Println(err)
@@ -105,7 +110,7 @@ func convNamePair(assStmt *ast.AssignStmt) *NamePair {
 	}
 	lval, ok := assStmt.Lhs[0].(*ast.Ident)
 	if !ok {
-		fmt.Printf("WARN: Cannot convert left [%+v]!\n", assStmt)
+		//fmt.Printf("WARN: Cannot convert left [%v]!\n", curfset.Position(assStmt.Pos()))
 		return nil
 	}
 
